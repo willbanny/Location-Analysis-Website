@@ -71,10 +71,14 @@ carehomes_df = pd.read_csv("../raw_data/care_homes_by_district.csv")
 #get sorted list of distric names (london boros first)
 master_df['start'] = master_df['District_ID'].astype(str).str[0]
 master_df_filtered = master_df[master_df['start'] == "E"]
-sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False)[['District']]
+sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False)
+
+
+
 
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
+
 
 
 mapObj = folium.Map(location=[51.509865,-0.118092], zoom_start=12)
@@ -140,7 +144,7 @@ with col1:
             if carehome_submit:
                 carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
 
-HeatMap(st.session_state['data'], scale_radius=True, radius=30).add_to(mapObj)
+HeatMap(st.session_state['data'], scale_radius=True, radius=30, gradient={0: 'red', 1: 'orange', 2: 'lime'}).add_to(mapObj)
 folium_static(mapObj, width = 725)
 
     # carehome_submit = st.form_submit_button("Add Carehomes?")
