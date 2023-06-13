@@ -1,0 +1,12 @@
+# googlemaps
+# geopy
+# db-dtypes
+# google-cloud-storage
+# google-cloud-core
+# google-cloud-bigquery
+streamlit
+folium
+streamlit_folium
+# matplotlib.pyplot
+gbq_functions.big_query_download
+requests
