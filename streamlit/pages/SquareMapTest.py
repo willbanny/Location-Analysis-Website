@@ -7,6 +7,7 @@ from streamlit_folium import st_folium, folium_static
 # from gbq_functions.big_query_download import *
 from gbq_functions.params import *
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 from google.cloud import bigquery
 
 '''
@@ -73,9 +74,15 @@ with st.form("district input"):
         start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
         centre_point = [start_lat, start_lon]
         st.session_state['centre'] = centre_point
-        lats = labeled_df_filtered['lat']
-        longs = labeled_df_filtered['lng']
-        clusters = labeled_df_filtered['Labels']
+        lats = np.array(labeled_df_filtered['lat'])
+        longs = np.array(labeled_df_filtered['lng'])
+        lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
+        st.session_state['lat_step'] = lat_step
+
+        long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
+        st.session_state['long_step'] = long_step
+
+        clusters = np.array(labeled_df_filtered['Labels'])
         zipped = zip(lats, longs, clusters)
         data = np.array(list(zipped))
         # if 'data' not in st.session_state:
@@ -88,6 +95,44 @@ def plotDot(point):
     folium.CircleMarker(location=[point.lat, point.lng],
                         radius=1,
                         weight=2).add_to(mapObj)
+
+
+def geo_json(lat, long, cluster, lat_step, long_step):
+    cmap = mpl.cm.viridis
+    return {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {
+            'color': 'white',
+            'opacity': '0',
+            'weight': 1,
+            'fillColor': mpl.colors.to_hex(cmap(cluster*( 255//max(clusters) ) ) ),
+            'fillOpacity': 0.5,
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[
+                [long - long_step/2, lat - lat_step/2],
+                [long - long_step/2, lat + lat_step/2],
+                [long + long_step/2, lat + lat_step/2],
+                [long + long_step/2, lat - lat_step/2],
+                [long - long_step/2, lat - lat_step/2],
+              ]]}}]}
+
+# ...with squares...
+
+if 'lat_step' not in st.session_state:
+    st.session_state['lat_step'] = 0.002
+if 'long_step' not in st.session_state:
+    st.session_state['long_step'] = 0.002
+def apply_squares():
+    for i in np.arange(len(clusters)):
+        folium.GeoJson(geo_json(lats[i], longs[i], clusters[i], st.session_state['lat_step'], st.session_state['long_step'] ),
+                    lambda x: x['properties']).add_to(mapObj)
+apply_squares()
+
 zoom = 12
 if 'centre' not in st.session_state:
     st.session_state['centre'] = [51.509865,-0.118092]

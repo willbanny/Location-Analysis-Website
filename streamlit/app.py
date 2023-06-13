@@ -144,7 +144,7 @@ with col1:
             if carehome_submit:
                 carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
 
-HeatMap(st.session_state['data'], scale_radius=True, radius=30, gradient={0: 'red', 1: 'orange', 2: 'lime'}).add_to(mapObj)
+HeatMap(st.session_state['data'], scale_radius=True, radius=30, gradient={.6: 'blue', .92: 'lime', 1: 'red'}).add_to(mapObj)
 folium_static(mapObj, width = 725)
 
     # carehome_submit = st.form_submit_button("Add Carehomes?")
