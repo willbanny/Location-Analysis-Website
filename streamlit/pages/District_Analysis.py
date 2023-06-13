@@ -14,6 +14,9 @@ from google.cloud import bigquery
 ## District Specific
 '''
 
+# load output datasets
+bad_df = pd.read_csv('outputs/display_bad.csv')
+good_df = pd.read_csv('outputs/display_gd.csv')
 
 # get list of the districts (for inputs)
 @st.cache_data
@@ -44,9 +47,8 @@ option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
 st.dataframe(sorted_df)
-start_lat = sorted_df.iloc[0]['Centroid_Lat']
-start_lon = sorted_df.iloc[0]['Centroid_Lon']
-centre_point = [start_lat, start_lon]
+
+
 
 with st.form("district input"):
     district_input = option
@@ -56,6 +58,11 @@ with st.form("district input"):
         #     st.session_state['district'] = district_input
         st.session_state['district'] = district_input
         labeled_df_filtered = labeled_df[labeled_df['district_name']==st.session_state['district']]
+        sorted_df_filtered = sorted_df[sorted_df['District']==st.session_state['district']]
+        start_lat = sorted_df_filtered.iloc[0]['Centroid_Lat']
+        start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
+        centre_point = [start_lat, start_lon]
+        
         lats = labeled_df_filtered['lat']
         longs = labeled_df_filtered['lng']
         clusters = labeled_df_filtered['Labels']
