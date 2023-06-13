@@ -7,5 +7,5 @@ google-cloud-bigquery
 streamlit
 folium
 streamlit_folium
-matplotlib.pyplot
+matplotlib
 requests
