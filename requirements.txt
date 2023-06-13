@@ -8,5 +8,5 @@ streamlit
 folium
 streamlit_folium
 # matplotlib.pyplot
-gbq_functions.big_query_download
+streamlit.gbq_functions.big_query_download
 requests
