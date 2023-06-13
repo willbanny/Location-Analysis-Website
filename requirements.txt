@@ -1,11 +1,11 @@
-# googlemaps
-# geopy
-# db-dtypes
-# google-cloud-storage
-# google-cloud-core
-# google-cloud-bigquery
+googlemaps
+geopy
+db-dtypes
+google-cloud-storage
+google-cloud-core
+google-cloud-bigquery
 streamlit
 folium
 streamlit_folium
-# matplotlib.pyplot
+matplotlib.pyplot
 requests
