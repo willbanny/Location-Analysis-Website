@@ -67,6 +67,19 @@ input_list = ['Barking and Dagenham London Boro',
 option = st.multiselect("select/deselect London boroughs",
                         input_list)
 
+# set up the website to show Dorset on initializing
+if 'district' not in st.session_state:
+    st.session_state['district'] = input_list
+
+#creating buttons
+with st.form("district input"):
+    district_input = option
+    submitted = st.form_submit_button("Search District")
+    if submitted:
+        if 'district' not in st.session_state:
+            st.session_state['district'] = 'district_input'
+        st.session_state['district'] = district_input
+
 
 # With magic:
 st.session_state
