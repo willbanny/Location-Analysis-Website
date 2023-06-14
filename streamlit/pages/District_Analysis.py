@@ -76,32 +76,32 @@ with st.form("district input"):
         # if 'district' not in st.session_state:
         #     st.session_state['district'] = district_input
         st.session_state['district'] = district_input
-        labeled_df_filtered = labeled_df[labeled_df['district_name']==st.session_state['district']]
-        sorted_df_filtered = sorted_df[sorted_df['District']==st.session_state['district']]
-        start_lat = sorted_df_filtered.iloc[0]['Centroid_Lat']
-        start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
-        centre_point = [start_lat, start_lon]
-        st.session_state['centre'] = centre_point
-        lats = labeled_df_filtered['lat']
-        longs = labeled_df_filtered['lng']
-        clusters = labeled_df_filtered['Labels']
-        zipped = zip(lats, longs, clusters)
-        data = np.array(list(zipped))
-        # if 'data' not in st.session_state:
-        #     st.session_state['data'] = data
-        st.session_state['data'] = data
+        # labeled_df_filtered = labeled_df[labeled_df['district_name']==st.session_state['district']]
+        # sorted_df_filtered = sorted_df[sorted_df['District']==st.session_state['district']]
+        # start_lat = sorted_df_filtered.iloc[0]['Centroid_Lat']
+        # start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
+        # centre_point = [start_lat, start_lon]
+        # st.session_state['centre'] = centre_point
+        # lats = labeled_df_filtered['lat']
+        # longs = labeled_df_filtered['lng']
+        # clusters = labeled_df_filtered['Labels']
+        # zipped = zip(lats, longs, clusters)
+        # data = np.array(list(zipped))
+        # # if 'data' not in st.session_state:
+        # #     st.session_state['data'] = data
+        # st.session_state['data'] = data
 
-def plotDot(point):
-    '''input: series that contains a numeric named latitude and a numeric named longitude
-    this function creates a CircleMarker and adds it to your this_map'''
-    folium.CircleMarker(location=[point.lat, point.lng],
-                        radius=1,
-                        weight=2).add_to(mapObj)
-zoom = 12
-if 'centre' not in st.session_state:
-    st.session_state['centre'] = [51.509865,-0.118092]
-    zoom = 6
-mapObj = folium.Map(location=st.session_state['centre'], zoom_start=zoom)
+# def plotDot(point):
+#     '''input: series that contains a numeric named latitude and a numeric named longitude
+#     this function creates a CircleMarker and adds it to your this_map'''
+#     folium.CircleMarker(location=[point.lat, point.lng],
+#                         radius=1,
+#                         weight=2).add_to(mapObj)
+# zoom = 12
+# if 'centre' not in st.session_state:
+#     st.session_state['centre'] = [51.509865,-0.118092]
+#     zoom = 6
+# mapObj = folium.Map(location=st.session_state['centre'], zoom_start=zoom)
 
 with st.form("carehome input"):
     carehome_submit = st.form_submit_button("Add Carehomes?")
@@ -161,20 +161,21 @@ care_scat = go.Scattermapbox(
 layout = go.Layout(
     mapbox_style='carto-positron',
     mapbox_zoom=8,
-    mapbox_center={'lat': 52, 'lon': -1},
+    mapbox_center={'lat': gdf['lat'].mean(), 'lon': gdf['lng'].mean()},
     margin={'r': 0, 't': 0, 'l': 0, 'b': 0},
 )
 
 fig = go.Figure(data=[scatter_trace, scatter_trace_bd, care_scat], layout=layout)
-
 st.plotly_chart(fig)
+
+
 
 if 'data' in st.session_state:
     HeatMap(st.session_state['data'], scale_radius=True, radius=30).add_to(mapObj)
 
 
 
-folium_static(mapObj, width = 725)
+# folium_static(mapObj, width = 725)
 
 @st.cache_data
 def get_radar_data(district):
