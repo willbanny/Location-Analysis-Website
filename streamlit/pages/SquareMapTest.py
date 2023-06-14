@@ -50,6 +50,15 @@ master_df['start'] = master_df['District_ID'].astype(str).str[0] #gets the lette
 master_df_filtered = master_df[master_df['start'] == "E"] #filters for english districts only
 sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False) #sorts
 
+
+# create drop down box
+option = st.selectbox("Select District:",
+                      list(sorted_df['District']))
+
+# set up the website to show Dorset on initializing
+if 'district' not in st.session_state:
+    st.session_state['district'] = 'Dorset'
+
 #creating buttons
 with st.form("district input"):
     district_input = option
@@ -64,13 +73,7 @@ lats = labeled_df['lat']
 longs = labeled_df['lng']
 clusters = labeled_df['Labels']
 
-# create drop down box
-option = st.selectbox("Select District:",
-                      list(sorted_df['District']))
 
-# set up the website to show Dorset on initializing
-if 'district' not in st.session_state:
-    st.session_state['district'] = 'Dorset'
 
 # #creating buttons
 # with st.form("district input"):
