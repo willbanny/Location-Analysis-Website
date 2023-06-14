@@ -61,6 +61,7 @@ input_list = ['Barking and Dagenham London Boro',
 #                         on_change=st.session_state['district'] = input_list])
 
 
+st.write(st.session_state)
 
 
 st.session_state['district'] = input_list
@@ -79,7 +80,7 @@ if st.sidebar.button('Submit!'):
 def get_map_data(district):
     return load_london_gdf_data(district)
 
-gdf, gdf2, gdf3 = load_london_gdf_data(st.session_state['district'])
+gdf, gdf2, gdf3 = load_london_gdf_data(list(st.session_state['district']))
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
