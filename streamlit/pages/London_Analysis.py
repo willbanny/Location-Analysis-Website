@@ -60,8 +60,6 @@ input_list = ['Barking and Dagenham London Boro',
 #                         input_list,default=['City and County of the City of London'],
 #                         on_change=st.session_state['district'] = input_list])
 
-st.session_state
-
 if 'district' not in st.session_state:
     st.session_state['district'] = input_list
 
