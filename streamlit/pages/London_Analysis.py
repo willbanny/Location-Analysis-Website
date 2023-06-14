@@ -62,8 +62,8 @@ input_list = ['Barking and Dagenham London Boro',
 
 st.session_state['district'] = input_list
 
-selected_options = st.sidebar.multiselect("select/deselect London boroughs",
-input_list,default=['City and County of the City of London'])
+selected_options = st.sidebar.multiselect("select/deselect boroughs - then click submit",
+input_list)
 
 selected_list = []
 for option in selected_options:
