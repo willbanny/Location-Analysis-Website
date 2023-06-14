@@ -65,7 +65,7 @@ input_list = ['Barking and Dagenham London Boro',
  'Wandsworth London Boro']
 # create multiselect options
 option = st.multiselect("select/deselect London boroughs",
-                        input_list)
+                        input_list,default=['City and County of the City of London'])
 
 # set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
@@ -83,7 +83,7 @@ with st.form("district input"):
 
 # With magic:
 st.session_state
-
+st.write(st.session_state)
 
 # @st.cache_data(persist=True)
 def get_map_data(district):
