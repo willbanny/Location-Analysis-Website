@@ -28,7 +28,7 @@ credentials = service_account.Credentials.from_service_account_info(st.secrets["
 #         del st.session_state[key]
 # get list of the districts (for inputs)
 
-# @st.cache_data(persist=True)
+@st.cache_data(persist=True)
 def get_master_district_df():
     '''function that returns the full master district df.
     Dataframe contains district name (primary key), lat_lons for the center,
@@ -57,6 +57,7 @@ carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
 # put source files onto github, then reference
 
 #load output dataset
+
 all_df = load_output_df()
 
 labeled_df = all_df.rename(columns = {"metric": "Labels"})
@@ -68,6 +69,7 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
+# set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
     st.session_state['district'] = 'Dorset'
 
@@ -79,8 +81,6 @@ with st.form("district input"):
         if 'district' not in st.session_state:
             st.session_state['district'] = 'district_input'
         st.session_state['district'] = district_input
-
-st.write(st.session_state)
 
 # With magic:
 st.session_state
