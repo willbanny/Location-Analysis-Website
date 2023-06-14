@@ -24,37 +24,37 @@ import plotly.graph_objects as go
 
 input_list = ['Barking and Dagenham London Boro',
  'Barnet London Boro',
- 'Bexley London Boro']
-#  'Brent London Boro',
-#  'Bromley London Boro',
-#  'Camden London Boro',
-#  'City and County of the City of London',
-#  'City of Westminster London Boro',
-#  'Croydon London Boro',
-#  'Ealing London Boro',
-#  'Enfield London Boro',
-#  'Greenwich London Boro',
-#  'Hackney London Boro',
-#  'Hammersmith and Fulham London Boro',
-#  'Haringey London Boro',
-#  'Harrow London Boro',
-#  'Havering London Boro',
-#  'Hillingdon London Boro',
-#  'Hounslow London Boro',
-#  'Islington London Boro',
-#  'Kensington and Chelsea London Boro',
-#  'Kingston upon Thames London Boro',
-#  'Lambeth London Boro',
-#  'Lewisham London Boro',
-#  'Merton London Boro',
-#  'Newham London Boro',
-#  'Redbridge London Boro',
-#  'Richmond upon Thames London Boro',
-#  'Southwark London Boro',
-#  'Sutton London Boro',
-#  'Tower Hamlets London Boro',
-#  'Waltham Forest London Boro',
-#  'Wandsworth London Boro']
+ 'Bexley London Boro',
+ 'Brent London Boro',
+ 'Bromley London Boro',
+ 'Camden London Boro',
+ 'City and County of the City of London',
+ 'City of Westminster London Boro',
+ 'Croydon London Boro',
+ 'Ealing London Boro',
+ 'Enfield London Boro',
+ 'Greenwich London Boro',
+ 'Hackney London Boro',
+ 'Hammersmith and Fulham London Boro',
+ 'Haringey London Boro',
+ 'Harrow London Boro',
+ 'Havering London Boro',
+ 'Hillingdon London Boro',
+ 'Hounslow London Boro',
+ 'Islington London Boro',
+ 'Kensington and Chelsea London Boro',
+ 'Kingston upon Thames London Boro',
+ 'Lambeth London Boro',
+ 'Lewisham London Boro',
+ 'Merton London Boro',
+ 'Newham London Boro',
+ 'Redbridge London Boro',
+ 'Richmond upon Thames London Boro',
+ 'Southwark London Boro',
+ 'Sutton London Boro',
+ 'Tower Hamlets London Boro',
+ 'Waltham Forest London Boro',
+ 'Wandsworth London Boro']
 # create multiselect options
 # multi_option = st.multiselect("select/deselect London boroughs",
 #                         input_list,default=['City and County of the City of London'],
@@ -64,6 +64,11 @@ input_list = ['Barking and Dagenham London Boro',
 
 
 st.session_state['district'] = input_list
+
+add_selectbox = st.sidebar.multiselect("select/deselect London boroughs",
+input_list,default=['City and County of the City of London'])
+
+st.write(st.session_state)
 
 @st.cache_data(persist=True)
 def get_map_data(district):
