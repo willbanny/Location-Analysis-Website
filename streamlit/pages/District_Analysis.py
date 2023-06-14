@@ -68,6 +68,8 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
+option2 = st.button()
+
 #creating buttons
 with st.form("district input"):
     district_input = option
