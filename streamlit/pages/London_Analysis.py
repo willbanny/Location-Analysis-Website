@@ -136,7 +136,7 @@ care_scat = go.Scattermapbox(
 layout = go.Layout(
     mapbox_style='carto-positron',
     mapbox_zoom=8,
-    mapbox_center={'lat': max(gdf['lat'].mean(),gdf2['lat'].mean()) , 'lon': max(gdf['lng'].mean(),gdf['lng'].mean())},
+    mapbox_center={'lat': 51.52 , 'lon': -0.12},
     margin={'r': 0, 't': 0, 'l': 0, 'b': 0},
 )
 
