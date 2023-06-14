@@ -68,3 +68,5 @@ option = st.multiselect("select/deselect London boroughs",
                         input_list)
 
 
+# With magic:
+st.session_state
