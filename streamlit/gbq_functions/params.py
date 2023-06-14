@@ -3,15 +3,15 @@ import numpy as np
 import streamlit as st
 ##################  VARIABLES  ##################
 GCP_PROJECT = st.secrets["GCP_PROJECT"]
-BQ_DATASET = os.environ.get("BQ_DATASET")
-BQ_REGION = os.environ.get("BQ_REGION")
-BQ_DISTRICT_TABLE = os.environ.get("BQ_DISTRICT_TABLE")
-BQ_GRID_TABLE = os.environ.get("BQ_DISTRICT_GRID_TABLE")
-BQ_GOOGLE_TABLE = os.environ.get("BQ_GOOGLE_TABLE")
-BQ_CRIME_TABLE = os.environ.get("BQ_CRIME_TABLE")
-BQ_DEP_TABLE = os.environ.get("BQ_DEP_TABLE")
-BQ_GOLDEN_TABLE = os.environ.get("BQ_GOLDEN_TABLE")
-BQ_CAREHOME_X_TABLE = os.environ.get("BQ_CAREHOME_X_TABLE")
+BQ_DATASET = st.secrets["BQ_DATASET"]
+BQ_REGION = st.secrets["BQ_REGION"]
+BQ_DISTRICT_TABLE = st.secrets["BQ_DISTRICT_TABLE"]
+BQ_GRID_TABLE = st.secrets["BQ_DISTRICT_GRID_TABLE"]
+BQ_GOOGLE_TABLE = st.secrets["BQ_GOOGLE_TABLE"]
+BQ_CRIME_TABLE = st.secrets["BQ_CRIME_TABLE"]
+BQ_DEP_TABLE = st.secrets["BQ_DEP_TABLE"]
+BQ_GOLDEN_TABLE = st.secrets["BQ_GOLDEN_TABLE"]
+BQ_CAREHOME_X_TABLE = st.secrets["BQ_CAREHOME_X_TABLE"]
 
 MASTER_COLUMN_NAMES_RAW = ["District",
     "HECTARES",

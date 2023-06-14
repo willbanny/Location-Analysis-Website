@@ -8,6 +8,8 @@ from streamlit_folium import st_folium, folium_static
 from gbq_functions.params import *
 import matplotlib.pyplot as plt
 from google.cloud import bigquery
+from functions_for_website.load_outputs import *
+
 
 '''
 # Location Analysis
@@ -43,7 +45,12 @@ folium_static(UK_mapObj, width = 725)
 
 # loading dataframes
 golden_df = pd.read_csv('../raw_data/golden_df_wb_tests.csv')
-labeled_df = pd.read_csv('../outputs/test_labelled_districts.csv')
+
+#load output dataset
+all_df = load_output_df()
+
+labeled_df = all_df.rename(columns = {"metric": "Labels"})
+
 @st.cache_data
 def get_master_district_df():
     '''function that returns the full master district df.
@@ -63,7 +70,7 @@ def get_master_district_df():
     master_districts_df = result.to_dataframe()
     return master_districts_df
 master_df = get_master_district_df()
-outputs_df = pd.read_csv("../outputs/model_output_labels.csv")
+# outputs_df = pd.read_csv("../outputs/model_output_labels.csv")
 carehomes_df = pd.read_csv("../raw_data/care_homes_by_district.csv")
 
 # st.dataframe(outputs_df, use_container_width=True) # only displaying a dataframe
