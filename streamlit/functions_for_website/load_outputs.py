@@ -53,7 +53,7 @@ def load_london_output_df():
 
 
 
-def load_london_gdf_data():
+def load_london_gdf_data(district:list):
     input_list = ['Barking and Dagenham London Boro',
  'Barnet London Boro',
  'Bexley London Boro',
@@ -96,9 +96,9 @@ def load_london_gdf_data():
     carehomes = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
 
 
-    data = good_df[good_df['district_name'].isin(input_list)][['lat', 'lng', 'metric']].copy()
-    dataBd = bad_df[bad_df['district_name'].isin(input_list)][['lat', 'lng', 'metric']].copy()
-    care_data = carehomes[carehomes['district_name'].isin(input_list)][['lat', 'lng']].copy()
+    data = good_df[good_df['district_name'].isin(district)][['lat', 'lng', 'metric']].copy()
+    dataBd = bad_df[bad_df['district_name'].isin(district)][['lat', 'lng', 'metric']].copy()
+    care_data = carehomes[carehomes['district_name'].isin(district)][['lat', 'lng']].copy()
     df = pd.DataFrame(data)
     df2 = pd.DataFrame(dataBd)
     df3 = pd.DataFrame(care_data)
@@ -108,3 +108,6 @@ def load_london_gdf_data():
     gdf3 = gpd.GeoDataFrame(df3, geometry=gpd.points_from_xy(df3.lng, df3.lat))
 
     return gdf, gdf2, gdf3
+
+# test = load_london_gdf_data(['Islington London Boro'])
+# print(test)
