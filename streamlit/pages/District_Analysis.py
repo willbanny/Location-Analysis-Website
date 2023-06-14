@@ -49,7 +49,7 @@ master_df_filtered = master_df[master_df['start'] == "E"] #filters for english d
 sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False) #sorts
 
 
-carehomes_df = pd.read_csv("../../outputs/all_carehomes.csv")
+carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
 # put source files onto github, then reference
 
 #load output dataset
@@ -102,7 +102,7 @@ mapObj = folium.Map(location=st.session_state['centre'], zoom_start=zoom)
 with st.form("carehome input"):
     carehome_submit = st.form_submit_button("Add Carehomes?")
     if carehome_submit:
-        carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
+        carehomes_df[carehomes_df['District'] == st.session_state['district']].apply(plotDot, axis = 1)
 
 
 
