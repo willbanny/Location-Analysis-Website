@@ -28,7 +28,7 @@ credentials = service_account.Credentials.from_service_account_info(st.secrets["
 #         del st.session_state[key]
 # get list of the districts (for inputs)
 
-@st.cache_data(ttl=None)
+@st.cache_data(ttl=3660)
 def get_master_district_df():
     '''function that returns the full master district df.
     Dataframe contains district name (primary key), lat_lons for the center,
@@ -108,7 +108,7 @@ with st.form("carehome input"):
     if carehome_submit:
         carehomes_df[carehomes_df['District'] == st.session_state['district']].apply(plotDot, axis = 1)
 
-@st.cache_data(ttl=None)
+@st.cache_data(ttl=3660)
 def get_map_data(district):
     return load_gdf_data(district)
 
@@ -177,7 +177,7 @@ if 'data' in st.session_state:
 
 # folium_static(mapObj, width = 725)
 
-@st.cache_data
+@st.cache_data(ttl=3660)
 def get_radar_data(district):
     return radar_chart_data(district)
 
