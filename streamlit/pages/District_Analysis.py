@@ -68,6 +68,9 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
+st.write(sorted_df)
+
+
 #creating buttons
 with st.form("district input"):
     district_input = option
@@ -77,10 +80,10 @@ with st.form("district input"):
             st.session_state['district'] = district_input
         st.session_state['district'] = district_input
 
-with st.form("carehome input"):
-    carehome_submit = st.form_submit_button("Add Carehomes?")
-    if carehome_submit:
-        carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
+# with st.form("carehome input"):
+#     carehome_submit = st.form_submit_button("Add Carehomes?")
+#     if carehome_submit:
+#         carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
 
 @st.cache_data(persist=True)
 def get_map_data(district):
@@ -146,8 +149,8 @@ st.plotly_chart(fig)
 
 
 
-if 'data' in st.session_state:
-    HeatMap(st.session_state['data'], scale_radius=True, radius=30).add_to(mapObj)
+# if 'data' in st.session_state:
+#     HeatMap(st.session_state['data'], scale_radius=True, radius=30).add_to(mapObj)
 
 
 
