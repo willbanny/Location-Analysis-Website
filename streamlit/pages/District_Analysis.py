@@ -72,9 +72,9 @@ option = st.selectbox("Select District:",
 # if st.button('Submit!'):
 #     st.session_state['district'] = option  #Check with Leo - but no difference i think?
 
-# set up the website to show Dorset on initializing
+# set up the website to show first option (Adur District) on initializing
 if 'district' not in st.session_state:
-    st.session_state['district'] = 'Dorset'
+    st.session_state['district'] = 'Adur District'
 
 #creating buttons
 with st.form("district input"):

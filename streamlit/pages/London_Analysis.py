@@ -11,26 +11,15 @@ import matplotlib.pyplot as plt
 from google.cloud import bigquery
 from functions_for_website.load_outputs import *
 from functions_for_website.radar import *
-from google.oauth2 import service_account
 import plotly.express as px
 import plotly.graph_objects as go
 
-# st.cache_data.clear()
 
-credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
+'''
+# Location Analysis
+## Analysing the 33 London Boroughs
+'''
 
-carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
-
-#load output dataset
-
-all_df = load_output_df()
-
-labeled_df = all_df.rename(columns = {"metric": "Labels"})
-lats = labeled_df['lat']
-longs = labeled_df['lng']
-clusters = labeled_df['Labels']
-
-st.dataframe(all_df)
 
 
 input_list = ['Barking and Dagenham London Boro',
@@ -75,10 +64,6 @@ input_list = ['Barking and Dagenham London Boro',
 
 
 st.session_state['district'] = input_list
-
-# With magic:
-st.session_state
-st.write(st.session_state)
 
 @st.cache_data(persist=True)
 def get_map_data():
@@ -139,35 +124,4 @@ layout = go.Layout(
 fig = go.Figure(data=[scatter_trace, scatter_trace_bd, care_scat], layout=layout)
 st.plotly_chart(fig, use_container_width=True)
 
-# Radar Charts
-
-@st.cache_data(ttl=3660)
-def get_radar_data(district):
-    return radar_chart_data(district)
-
-scaled_df, angles, best, middle, worst = get_radar_data(st.session_state['district'])
-fig=plt.figure(figsize=(12,12))
-ax=fig.add_subplot(polar=True)
-#basic plot
-ax.plot(angles,scaled_df.T[best], 'o--', color='g', label='best_cluster')
-#fill plot
-ax.fill(angles, scaled_df.T[best], alpha=0.25, color='g')
-
-
-
-ax.plot(angles,scaled_df.T[middle], 'o--', color='b', label='middle_cluster')
-#fill plot
-ax.fill(angles, scaled_df.T[middle], alpha=0.25, color='b')
-
-
-ax.plot(angles,scaled_df.T[worst], 'o--', color='r', label='worst_cluster')
-#fill plot
-ax.fill(angles, scaled_df.T[worst], alpha=0.25, color='r')
-
-
-#Add labels
-ax.set_thetagrids(angles * 180/np.pi, scaled_df.T[best].index)
-plt.grid(True)
-plt.tight_layout()
-plt.legend()
-st.pyplot(fig)
+# Bar Chart?
