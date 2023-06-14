@@ -50,14 +50,6 @@ master_df['start'] = master_df['District_ID'].astype(str).str[0] #gets the lette
 master_df_filtered = master_df[master_df['start'] == "E"] #filters for english districts only
 sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False) #sorts
 
-# create drop down box
-option = st.selectbox("Select District:",
-                      list(sorted_df['District']))
-
-# set up the website to show Dorset on initializing
-if 'district' not in st.session_state:
-    st.session_state['district'] = 'Dorset'
-
 #creating buttons
 with st.form("district input"):
     district_input = option
@@ -76,34 +68,38 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
-#creating buttons
-with st.form("district input"):
-    district_input = option
-    submitted = st.form_submit_button("Search District")
-    if submitted:
-        # if 'district' not in st.session_state:
-        #     st.session_state['district'] = district_input
-        st.session_state['district'] = district_input
-        labeled_df_filtered = labeled_df[labeled_df['district_name']==st.session_state['district']]
-        sorted_df_filtered = sorted_df[sorted_df['District']==st.session_state['district']]
-        start_lat = sorted_df_filtered.iloc[0]['Centroid_Lat']
-        start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
-        centre_point = [start_lat, start_lon]
-        st.session_state['centre'] = centre_point
-        lats = np.array(labeled_df_filtered['lat'])
-        longs = np.array(labeled_df_filtered['lng'])
-        lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
-        st.session_state['lat_step'] = lat_step
+# set up the website to show Dorset on initializing
+if 'district' not in st.session_state:
+    st.session_state['district'] = 'Dorset'
 
-        long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
-        st.session_state['long_step'] = long_step
+# #creating buttons
+# with st.form("district input"):
+#     district_input = option
+#     submitted = st.form_submit_button("Search District")
+#     if submitted:
+#         # if 'district' not in st.session_state:
+#         #     st.session_state['district'] = district_input
+#         st.session_state['district'] = district_input
+#         labeled_df_filtered = labeled_df[labeled_df['district_name']==st.session_state['district']]
+#         sorted_df_filtered = sorted_df[sorted_df['District']==st.session_state['district']]
+#         start_lat = sorted_df_filtered.iloc[0]['Centroid_Lat']
+#         start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
+#         centre_point = [start_lat, start_lon]
+#         st.session_state['centre'] = centre_point
+#         lats = np.array(labeled_df_filtered['lat'])
+#         longs = np.array(labeled_df_filtered['lng'])
+#         lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
+#         st.session_state['lat_step'] = lat_step
 
-        clusters = np.array(labeled_df_filtered['Labels'])
-        zipped = zip(lats, longs, clusters)
-        data = np.array(list(zipped))
-        # if 'data' not in st.session_state:
-        #     st.session_state['data'] = data
-        st.session_state['data'] = data
+#         long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
+#         st.session_state['long_step'] = long_step
+
+#         clusters = np.array(labeled_df_filtered['Labels'])
+#         zipped = zip(lats, longs, clusters)
+#         data = np.array(list(zipped))
+#         # if 'data' not in st.session_state:
+#         #     st.session_state['data'] = data
+#         st.session_state['data'] = data
 
 
 golden_df = all_df['district_name'] = st.session_state['district']
