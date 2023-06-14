@@ -4,6 +4,8 @@ from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 from gbq_functions.big_query_download import *
+from functions_for_website.load_outputs import *
+
 
 # district_input = ['Dorset']
 def radar_chart_data(district:str):
@@ -20,9 +22,11 @@ def radar_chart_data(district:str):
 
 
     #maybe need a function for this
-    good_df = pd.read_csv("../outputs/display_gd.csv")
-    bad_df = pd.read_csv("../outputs/display_bad.csv")
-    all_df = pd.concat([good_df, bad_df],ignore_index = True)
+    all_df = load_output_df()
+
+    # good_df = pd.read_csv("../outputs/display_gd.csv")
+    # bad_df = pd.read_csv("../outputs/display_bad.csv")
+    # all_df = pd.concat([good_df, bad_df],ignore_index = True)
     output_df = all_df[all_df['district_name'] == district]
 
     golden_df['coord_lookup'] =  list(zip(golden_df.lat, golden_df.lng))
