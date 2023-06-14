@@ -105,7 +105,7 @@ clusters = labeled_df['Labels']
 #         st.session_state['data'] = data
 
 
-golden_df = all_df['district_name'] = st.session_state['district']
+golden_df = all_df[all_df['district_name'] == st.session_state['district']]
 golden_df = golden_df.drop_duplicates(['lat', 'lng'])
 golden_df['id'] = golden_df.index
 mapObj = folium.Map(location=[51.509865,-0.118092], zoom_start=10, prefer_canvas=True)
