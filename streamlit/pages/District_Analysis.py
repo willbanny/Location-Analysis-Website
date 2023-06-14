@@ -88,12 +88,6 @@ def get_map_data(district):
 
 gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
 
-st.write(st.session_state['district'])
-
-st.write(gdf)
-st.write(gdf2)
-st.write(gdf3)
-
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
     lon=gdf['lng'],
