@@ -65,6 +65,9 @@ st.session_state
 if 'district' not in st.session_state:
     st.session_state['district'] = input_list
 
+if len(st.session_state['district']) == 0:
+    st.session_state['district'] = input_list
+
 selected_options = st.sidebar.multiselect("select/deselect boroughs - then click submit",
 input_list)
 
