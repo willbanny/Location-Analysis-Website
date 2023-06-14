@@ -29,7 +29,7 @@ def load_gdf_data(district:str):
 
     data = good_df[good_df['district_name'].str.contains(district)][['lat', 'lng', 'metric']].copy()
     dataBd = bad_df[bad_df['district_name'].str.contains(district)][['lat', 'lng', 'metric']].copy()
-    care_data = carehomes[carehomes['District'].str.contains(district)][['lat', 'lng']].copy()
+    care_data = carehomes[carehomes['district_name'].str.contains(district)][['lat', 'lng']].copy()
 
     df = pd.DataFrame(data)
     df2 = pd.DataFrame(dataBd)
