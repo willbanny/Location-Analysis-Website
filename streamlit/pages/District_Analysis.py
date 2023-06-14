@@ -74,9 +74,14 @@ with st.form("district input"):
     submitted = st.form_submit_button("Search District")
     if submitted:
         if 'district' not in st.session_state:
-            # st.session_state['district'] = 'district_input'
-             st.session_state['district'] = 'dorset'
+            st.session_state['district'] = 'district_input'
+            st.session_state['district'] = 'dorset'
         st.session_state['district'] = district_input
+
+st.write(st.session_state)
+
+# With magic:
+st.session_state
 
 # @st.cache_data(persist=True)
 def get_map_data(district):
