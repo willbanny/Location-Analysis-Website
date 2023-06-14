@@ -69,7 +69,9 @@ st.session_state['district'] = input_list
 def get_map_data(district):
     return load_london_gdf_data(district)
 
-gdf, gdf2, gdf3 = load_london_gdf_data(st.session_state['district'])
+##fesg
+
+gdf, gdf2, gdf3 = load_london_gdf_data(input_list)
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
