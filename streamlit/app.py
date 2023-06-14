@@ -13,30 +13,7 @@ from functions_for_website.load_outputs import *
 
 '''
 # Location Analysis
-'''
-
-st.markdown('''
-# OUTPUTS!
-''')
-
-
-# st.dataframe(london_carehomes, use_container_width=True)
-
-
-# master_list = get_master_district_df()
-# print(master_list)
-
-
-
-# = get_master_district_df()['District']
-
-''' To Do:
-- get full map of the UK at top - DONE
-- drop down listed sorted for the districts, filtering out non english DONE
-- ability to zoom in on distrct with heatmap - DONE (but note below)
-- Plotting carehomes post district selection - SORT OF DONE - can plot but not while retaining district selection
-- test setting up a new page
-
+## Home Page
 '''
 
 UK_mapObj = folium.Map(location = [52.56205522008627, -1.4647329224702776], zoom_start = 6)
