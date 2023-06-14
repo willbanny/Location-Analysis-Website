@@ -73,7 +73,7 @@ selected_list = []
 for option in selected_options:
     selected_list.append(option)
 
-submitted = st.button('Submit!')
+submitted = st.sidebar.button('Submit!')
 if submitted:
     st.session_state['district'] = selected_list
 else:
@@ -81,9 +81,6 @@ else:
         st.session_state['district'] = input_list
 
 
-
-if st.sidebar.button('Submit!'):
-    st.session_state = selected_list
 
 @st.cache_data(persist=True)
 def get_map_data(district):
