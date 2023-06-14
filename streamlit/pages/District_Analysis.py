@@ -69,7 +69,7 @@ option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
 if 'district' not in st.session_state:
-    st.session_state['district'] = 'dorset'
+    st.session_state['district'] = 'Dorset'
 
 #creating buttons
 with st.form("district input"):
@@ -78,7 +78,6 @@ with st.form("district input"):
     if submitted:
         if 'district' not in st.session_state:
             st.session_state['district'] = 'district_input'
-            st.session_state['district'] = 'dorset'
         st.session_state['district'] = district_input
 
 st.write(st.session_state)
