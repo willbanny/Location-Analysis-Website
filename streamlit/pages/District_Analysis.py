@@ -76,8 +76,7 @@ with st.form("district input"):
     submitted = st.form_submit_button("Search District")
     if submitted:
         if 'district' not in st.session_state:
-            # st.session_state['district'] = 'district_input'
-            st.session_state['district'] = 'Dorset'
+            st.session_state['district'] = 'district_input'
         st.session_state['district'] = district_input
 
 # with st.form("carehome input"):
