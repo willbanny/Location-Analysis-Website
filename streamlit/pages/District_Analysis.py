@@ -49,8 +49,9 @@ def get_master_district_df():
 master_df = get_master_district_df()
 #get sorted list of distric names (london boros first)
 master_df['start'] = master_df['District_ID'].astype(str).str[0] #gets the letter at start of dist.
-master_df_filtered = master_df[master_df['start'] == "E"] #filters for english districts only
-sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False) #sorts
+master_df_filtered = master_df[master_df['start'] == "E"]
+master_df_filtered = master_df[~master_df['District'].str.contains("London",regex=False)]
+sorted_df = master_df_filtered.sort_values(by="District", ascending=True) #sorts
 
 
 carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
