@@ -68,9 +68,6 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
-st.write(sorted_df)
-
-
 #creating buttons
 with st.form("district input"):
     district_input = option
@@ -85,7 +82,7 @@ with st.form("district input"):
 #     if carehome_submit:
 #         carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
 
-@st.cache_data(persist=True)
+# @st.cache_data(persist=True)
 def get_map_data(district):
     return load_gdf_data(district)
 
