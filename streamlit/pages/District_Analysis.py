@@ -177,36 +177,36 @@ if 'data' in st.session_state:
 
 # folium_static(mapObj, width = 725)
 
-@st.cache_data(ttl=3660)
-def get_radar_data(district):
-    return radar_chart_data(district)
+# @st.cache_data(ttl=3660)
+# def get_radar_data(district):
+#     return radar_chart_data(district)
 
-scaled_df, angles, best, middle, worst = get_radar_data(st.session_state['district'])
-fig=plt.figure(figsize=(12,12))
-ax=fig.add_subplot(polar=True)
-#basic plot
-ax.plot(angles,scaled_df.T[best], 'o--', color='g', label='best_cluster')
-#fill plot
-ax.fill(angles, scaled_df.T[best], alpha=0.25, color='g')
-
-
-
-ax.plot(angles,scaled_df.T[middle], 'o--', color='b', label='middle_cluster')
-#fill plot
-ax.fill(angles, scaled_df.T[middle], alpha=0.25, color='b')
+# scaled_df, angles, best, middle, worst = get_radar_data(st.session_state['district'])
+# fig=plt.figure(figsize=(12,12))
+# ax=fig.add_subplot(polar=True)
+# #basic plot
+# ax.plot(angles,scaled_df.T[best], 'o--', color='g', label='best_cluster')
+# #fill plot
+# ax.fill(angles, scaled_df.T[best], alpha=0.25, color='g')
 
 
-ax.plot(angles,scaled_df.T[worst], 'o--', color='r', label='worst_cluster')
-#fill plot
-ax.fill(angles, scaled_df.T[worst], alpha=0.25, color='r')
+
+# ax.plot(angles,scaled_df.T[middle], 'o--', color='b', label='middle_cluster')
+# #fill plot
+# ax.fill(angles, scaled_df.T[middle], alpha=0.25, color='b')
 
 
-#Add labels
-ax.set_thetagrids(angles * 180/np.pi, scaled_df.T[best].index)
-plt.grid(True)
-plt.tight_layout()
-plt.legend()
-st.pyplot(fig)
+# ax.plot(angles,scaled_df.T[worst], 'o--', color='r', label='worst_cluster')
+# #fill plot
+# ax.fill(angles, scaled_df.T[worst], alpha=0.25, color='r')
+
+
+# #Add labels
+# ax.set_thetagrids(angles * 180/np.pi, scaled_df.T[best].index)
+# plt.grid(True)
+# plt.tight_layout()
+# plt.legend()
+# st.pyplot(fig)
 
 
 
