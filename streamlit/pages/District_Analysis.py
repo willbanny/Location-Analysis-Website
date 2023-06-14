@@ -54,7 +54,6 @@ sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False) #s
 
 
 carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
-# put source files onto github, then reference
 
 #load output dataset
 
@@ -81,9 +80,6 @@ with st.form("district input"):
         if 'district' not in st.session_state:
             st.session_state['district'] = 'district_input'
         st.session_state['district'] = district_input
-
-# With magic:
-st.session_state
 
 # @st.cache_data(persist=True)
 def get_map_data(district):
@@ -142,7 +138,7 @@ layout = go.Layout(
 )
 
 fig = go.Figure(data=[scatter_trace, scatter_trace_bd, care_scat], layout=layout)
-st.plotly_chart(fig)
+st.plotly_chart(fig, use_container_width=True)
 
 # Radar Charts
 
