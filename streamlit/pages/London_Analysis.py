@@ -83,3 +83,96 @@ with st.form("district input"):
 
 # With magic:
 st.session_state
+
+
+# @st.cache_data(persist=True)
+def get_map_data(district):
+    return load_london_gdf_data(district)
+
+gdf, gdf2, gdf3 = load_london_gdf_data(st.session_state['district'])
+
+scatter_trace = go.Scattermapbox(
+    lat=gdf['lat'],
+    lon=gdf['lng'],
+    mode='markers',
+    marker=dict(
+        size=5,
+        sizeref=1,
+        color=gdf['metric'],
+        colorscale='greens',
+        opacity=0.6,
+        colorbar=dict(title='Metric', x=0.8, len=0.4)
+    ),
+    hovertext=gdf['metric'],
+)
+
+scatter_trace_bd = go.Scattermapbox(
+    lat=gdf2['lat'],
+    lon=gdf2['lng'],
+    mode='markers',
+    marker=dict(
+        size=5,
+        sizeref=1,
+        color=gdf2['metric'],
+        colorscale='reds',
+        opacity=0.6,
+        colorbar=dict(title='Metric', x=1.0, len=0.4)
+    ),
+    hovertext=gdf2['metric'],
+)
+
+care_scat = go.Scattermapbox(
+    lat=gdf3['lat'],
+    lon=gdf3['lng'],
+    mode='markers',
+    marker=dict(
+        size=5,
+        sizeref=1,
+        color='blue',  # Set marker color to blue for care homes
+        opacity=0.9,
+    ),
+    hovertext='Care Homes',
+)
+
+layout = go.Layout(
+    mapbox_style='carto-positron',
+    mapbox_zoom=8,
+    mapbox_center={'lat': gdf['lat'].mean(), 'lon': gdf['lng'].mean()},
+    margin={'r': 0, 't': 0, 'l': 0, 'b': 0},
+)
+
+fig = go.Figure(data=[scatter_trace, scatter_trace_bd, care_scat], layout=layout)
+st.plotly_chart(fig, use_container_width=True)
+
+# Radar Charts
+
+@st.cache_data(ttl=3660)
+def get_radar_data(district):
+    return radar_chart_data(district)
+
+scaled_df, angles, best, middle, worst = get_radar_data(st.session_state['district'])
+fig=plt.figure(figsize=(12,12))
+ax=fig.add_subplot(polar=True)
+#basic plot
+ax.plot(angles,scaled_df.T[best], 'o--', color='g', label='best_cluster')
+#fill plot
+ax.fill(angles, scaled_df.T[best], alpha=0.25, color='g')
+
+
+
+ax.plot(angles,scaled_df.T[middle], 'o--', color='b', label='middle_cluster')
+#fill plot
+ax.fill(angles, scaled_df.T[middle], alpha=0.25, color='b')
+
+
+ax.plot(angles,scaled_df.T[worst], 'o--', color='r', label='worst_cluster')
+#fill plot
+ax.fill(angles, scaled_df.T[worst], alpha=0.25, color='r')
+
+
+#Add labels
+ax.set_thetagrids(angles * 180/np.pi, scaled_df.T[best].index)
+plt.grid(True)
+plt.tight_layout()
+plt.legend()
+st.pyplot(fig)
