@@ -30,6 +30,9 @@ lats = labeled_df['lat']
 longs = labeled_df['lng']
 clusters = labeled_df['Labels']
 
+st.dataframe(all_df)
+
+
 input_list = ['Barking and Dagenham London Boro',
  'Barnet London Boro',
  'Bexley London Boro',
@@ -65,7 +68,8 @@ input_list = ['Barking and Dagenham London Boro',
  'Wandsworth London Boro']
 # create multiselect options
 option = st.multiselect("select/deselect London boroughs",
-                        input_list,default=['City and County of the City of London'])
+                        input_list,default=['City and County of the City of London'],
+                        on_change=st.session_state['district'] = input_list)
 
 # set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
