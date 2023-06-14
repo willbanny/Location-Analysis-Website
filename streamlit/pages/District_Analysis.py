@@ -80,7 +80,7 @@ with st.form("district input"):
 with st.form("carehome input"):
     carehome_submit = st.form_submit_button("Add Carehomes?")
     if carehome_submit:
-        carehomes_df[carehomes_df['District'] == st.session_state['district']].apply(plotDot, axis = 1)
+        carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
 
 @st.cache_data(persist=True)
 def get_map_data(district):
@@ -119,8 +119,8 @@ scatter_trace_bd = go.Scattermapbox(
 )
 
 care_scat = go.Scattermapbox(
-    lat=gdf3['lng'],
-    lon=gdf3['lat'],
+    lat=gdf3['lat'],
+    lon=gdf3['lng'],
     mode='markers',
     marker=dict(
         size=5,
