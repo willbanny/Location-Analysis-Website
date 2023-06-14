@@ -1,7 +1,8 @@
 import os
 import numpy as np
+import streamlit as st
 ##################  VARIABLES  ##################
-GCP_PROJECT = os.environ.get("GCP_PROJECT")
+GCP_PROJECT = st.secrets["GCP_PROJECT"]
 BQ_DATASET = os.environ.get("BQ_DATASET")
 BQ_REGION = os.environ.get("BQ_REGION")
 BQ_DISTRICT_TABLE = os.environ.get("BQ_DISTRICT_TABLE")
