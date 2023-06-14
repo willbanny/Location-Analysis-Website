@@ -68,11 +68,8 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
-if st.button('Submit!'):
-    st.session_state['district'] = option
-
-
-
+# if st.button('Submit!'):
+#     st.session_state['district'] = option  #Check with Leo - but no difference i think?
 
 # set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
@@ -91,7 +88,9 @@ with st.form("district input"):
 def get_map_data(district):
     return load_gdf_data(district)
 
-gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
+
+if st.session_state['district']:
+    gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
