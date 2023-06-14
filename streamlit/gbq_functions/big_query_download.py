@@ -1,6 +1,9 @@
 from google.cloud import bigquery
 import pandas as pd
 from gbq_functions.params import *
+from google.oauth2 import service_account
+
+credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
 
 def get_master_district_df():
     '''function that returns the full master district df.
@@ -173,7 +176,7 @@ def get_golden_df(district:list):
 
     query1 = full_string
 
-    district_id_df = bigquery.Client(project=GCP_PROJECT).query(query1).result().to_dataframe()
+    district_id_df = bigquery.Client(project=GCP_PROJECT, credentials=credentials).query(query1).result().to_dataframe()
     district_id = district_id_df.iloc[0]['District_ID']
 
 
@@ -198,7 +201,7 @@ def get_golden_df(district:list):
             {full_or_string}
         """
 
-    client = bigquery.Client(project=GCP_PROJECT)
+    client = bigquery.Client(project=GCP_PROJECT, credentials=credentials)
     query_job = client.query(query2)
     result = query_job.result()
     golden_df = result.to_dataframe()
