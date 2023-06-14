@@ -12,6 +12,8 @@ from google.cloud import bigquery
 from functions_for_website.load_outputs import *
 from functions_for_website.radar import *
 from google.oauth2 import service_account
+import plotly.express as px
+import plotly.graph_objects as go
 
 st.cache_data.clear()
 
@@ -105,10 +107,72 @@ with st.form("carehome input"):
     if carehome_submit:
         carehomes_df[carehomes_df['District'] == st.session_state['district']].apply(plotDot, axis = 1)
 
+@st.cache_data
+def get_map_data(district):
+    return load_gdf_data(district)
 
+gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
+scatter_trace = go.Scattermapbox(
+    lat=gdf['lat'],
+    lon=gdf['lng'],
+    mode='markers',
+    marker=dict(
+        size=5,
+        sizeref=1,
+        color=gdf['metric'],
+        colorscale='greens',
+        opacity=0.6,
+        colorbar=dict(title='Metric', x=0.8, len=0.4)
+    ),
+    hovertext=gdf['metric'],
+)
+
+
+scatter_trace_bd = go.Scattermapbox(
+    lat=gdf2['lat'],
+    lon=gdf2['lng'],
+    mode='markers',
+    marker=dict(
+        size=5,
+        sizeref=1,
+        color=gdf2['metric'],
+        colorscale='reds',
+        opacity=0.6,
+        colorbar=dict(title='Metric', x=1.0, len=0.4)
+    ),
+    hovertext=gdf2['metric'],
+)
+
+care_scat = go.Scattermapbox(
+    lat=gdf3['lng'],
+    lon=gdf3['lat'],
+    mode='markers',
+    marker=dict(
+        size=5,
+        sizeref=1,
+        color='blue',  # Set marker color to blue for care homes
+        opacity=0.9,
+    ),
+    hovertext='Care Homes',
+)
+
+
+layout = go.Layout(
+    mapbox_style='carto-positron',
+    mapbox_zoom=8,
+    mapbox_center={'lat': 52, 'lon': -1},
+    margin={'r': 0, 't': 0, 'l': 0, 'b': 0},
+)
+
+fig = go.Figure(data=[scatter_trace, scatter_trace_bd, care_scat], layout=layout)
+
+st.plotly_chart(fig)
 
 if 'data' in st.session_state:
     HeatMap(st.session_state['data'], scale_radius=True, radius=30).add_to(mapObj)
+
+
+
 folium_static(mapObj, width = 725)
 
 @st.cache_data

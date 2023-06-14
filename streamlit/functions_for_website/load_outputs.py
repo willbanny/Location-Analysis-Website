@@ -1,5 +1,9 @@
 import pandas as pd
 import os
+import geopandas as gpd
+from shapely.geometry import Polygon, Point
+import geopandas as gpd
+from math import cos, pi
 
 def load_output_df():
     '''
@@ -12,3 +16,28 @@ def load_output_df():
     bad_df['category'] = "bad"
     all_df = pd.concat([good_df,bad_df], ignore_index=True)
     return all_df
+
+
+
+def load_gdf_data(district:str):
+    '''
+    loads up the dataframes to be used for the map
+    '''
+    bad_df = pd.read_csv(os.path.abspath("outputs/display_bad.csv"))
+    good_df = pd.read_csv(os.path.abspath("outputs/display_gd.csv"))
+    carehomes = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
+
+
+    data = good_df[good_df['district_name'].str.contains(district)][['lat', 'lng', 'metric']].copy()
+    dataBd = bad_df[bad_df['district_name'].str.contains(district)][['lat', 'lng', 'metric']].copy()
+    care_data = carehomes[carehomes['District'].str.contains(district)][['lat', 'lng']].copy()
+
+    df = pd.DataFrame(data)
+    df2 = pd.DataFrame(dataBd)
+    df3 = pd.DataFrame(care_data)
+
+    gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.lng, df.lat))
+    gdf2 = gpd.GeoDataFrame(df2, geometry=gpd.points_from_xy(df2.lng, df2.lat))
+    gdf3 = gpd.GeoDataFrame(df3, geometry=gpd.points_from_xy(df3.lng, df3.lat))
+
+    return gdf, gdf2, gdf3
