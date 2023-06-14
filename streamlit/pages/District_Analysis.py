@@ -68,7 +68,7 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
-option2 = st.button()
+
 
 #creating buttons
 with st.form("district input"):
@@ -76,7 +76,7 @@ with st.form("district input"):
     submitted = st.form_submit_button("Search District")
     if submitted:
         if 'district' not in st.session_state:
-            st.session_state['district'] = district_input
+            st.session_state['district'] = 'London'
         st.session_state['district'] = district_input
 
 # with st.form("carehome input"):
