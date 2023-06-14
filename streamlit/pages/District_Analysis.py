@@ -15,7 +15,7 @@ from google.oauth2 import service_account
 import plotly.express as px
 import plotly.graph_objects as go
 
-st.cache_data.clear()
+# st.cache_data.clear()
 
 credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
 
@@ -28,7 +28,7 @@ credentials = service_account.Credentials.from_service_account_info(st.secrets["
 #         del st.session_state[key]
 # get list of the districts (for inputs)
 
-@st.cache_data(persist=True)
+# @st.cache_data(persist=True)
 def get_master_district_df():
     '''function that returns the full master district df.
     Dataframe contains district name (primary key), lat_lons for the center,
