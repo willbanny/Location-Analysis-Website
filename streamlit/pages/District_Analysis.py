@@ -68,6 +68,12 @@ clusters = labeled_df['Labels']
 option = st.selectbox("Select District:",
                       list(sorted_df['District']))
 
+if st.button('Submit!'):
+    st.session_state['district'] = option
+
+
+
+
 # set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
     st.session_state['district'] = 'Dorset'
