@@ -65,18 +65,21 @@ input_list = ['Barking and Dagenham London Boro',
 
 st.session_state['district'] = input_list
 
-add_selectbox = st.sidebar.multiselect("select/deselect London boroughs",
+selected_options = st.sidebar.multiselect("select/deselect London boroughs",
 input_list,default=['City and County of the City of London'])
 
-st.write(st.session_state)
+selected_list = []
+for option in selected_options:
+    selected_list.append(option)
+
+if st.sidebar.button('Submit!'):
+    st.session_state = selected_list
 
 @st.cache_data(persist=True)
 def get_map_data(district):
     return load_london_gdf_data(district)
 
-##fesg
-
-gdf, gdf2, gdf3 = load_london_gdf_data(input_list)
+gdf, gdf2, gdf3 = load_london_gdf_data(st.session_state['district'])
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
