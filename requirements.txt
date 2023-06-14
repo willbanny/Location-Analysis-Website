@@ -9,3 +9,4 @@ folium
 streamlit_folium
 matplotlib
 requests
+scikit-learn
