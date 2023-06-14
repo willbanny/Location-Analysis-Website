@@ -69,16 +69,15 @@ st.session_state['district'] = input_list
 selected_options = st.sidebar.multiselect("select/deselect London boroughs",
 input_list,default=['City and County of the City of London'])
 
-with st.form("district input"):
-    district_input = selected_options
-    submitted = st.button('Submit!')
-    if submitted:
-        selected_list = []
-        for option in selected_options:
-            selected_list.append(option)
-        st.session_state['district'] = selected_list
-        if 'district' not in st.session_state:
-            st.session_state['district'] = 'district_input'
+selected_list = []
+for option in selected_options:
+    selected_list.append(option)
+
+submitted = st.button('Submit!')
+if submitted:
+    st.session_state['district'] = selected_list
+else:
+    if 'district' not in st.session_state:
         st.session_state['district'] = input_list
 
 
