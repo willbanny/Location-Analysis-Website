@@ -8,6 +8,14 @@ from streamlit_folium import st_folium, folium_static
 from gbq_functions.params import *
 import matplotlib.pyplot as plt
 from google.cloud import bigquery
+from functions_for_website.load_outputs import *
+from functions_for_website.radar import *
+from google.oauth2 import service_account
+
+st.cache_data.clear()
+
+credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
+
 
 '''
 # Location Analysis
@@ -29,7 +37,7 @@ def get_master_district_df():
             ORDER BY HECTARES DESC
         """
 
-    client = bigquery.Client(project=GCP_PROJECT)
+    client = bigquery.Client(project=GCP_PROJECT, credentials=credentials)
     query_job = client.query(query)
     result = query_job.result()
     master_districts_df = result.to_dataframe()
@@ -40,16 +48,13 @@ master_df['start'] = master_df['District_ID'].astype(str).str[0] #gets the lette
 master_df_filtered = master_df[master_df['start'] == "E"] #filters for english districts only
 sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False) #sorts
 
-# load output datasets
-bad_df = pd.read_csv('../outputs/display_bad.csv')
-good_df = pd.read_csv('../outputs/display_gd.csv')
-carehomes_df = pd.read_csv("../raw_data/care_homes_by_district.csv")
+
+carehomes_df = pd.read_csv("../outputs/care_homes_by_district.csv")
 # put source files onto github, then reference
 
-# data processing
-good_df['category'] = "good"
-bad_df['category'] = "bad"
-all_df = pd.concat([good_df,bad_df], ignore_index=True)
+#load output dataset
+all_df = load_output_df()
+
 labeled_df = all_df.rename(columns = {"metric": "Labels"})
 lats = labeled_df['lat']
 longs = labeled_df['lng']
@@ -104,3 +109,44 @@ with st.form("carehome input"):
 if 'data' in st.session_state:
     HeatMap(st.session_state['data'], scale_radius=True, radius=30).add_to(mapObj)
 folium_static(mapObj, width = 725)
+
+@st.cache_data
+def get_radar_data(district):
+    return radar_chart_data(district)
+
+scaled_df, angles, best, middle, worst = get_radar_data(st.session_state['district'])
+fig=plt.figure(figsize=(12,12))
+ax=fig.add_subplot(polar=True)
+#basic plot
+ax.plot(angles,scaled_df.T[best], 'o--', color='g', label='best_cluster')
+#fill plot
+ax.fill(angles, scaled_df.T[best], alpha=0.25, color='g')
+
+
+
+ax.plot(angles,scaled_df.T[middle], 'o--', color='b', label='middle_cluster')
+#fill plot
+ax.fill(angles, scaled_df.T[middle], alpha=0.25, color='b')
+
+
+ax.plot(angles,scaled_df.T[worst], 'o--', color='r', label='worst_cluster')
+#fill plot
+ax.fill(angles, scaled_df.T[worst], alpha=0.25, color='r')
+
+
+#Add labels
+ax.set_thetagrids(angles * 180/np.pi, scaled_df.T[best].index)
+plt.grid(True)
+plt.tight_layout()
+plt.legend()
+st.pyplot(fig)
+
+
+
+# load output datasets
+# bad_df = pd.read_csv('../outputs/display_bad.csv')
+# good_df = pd.read_csv('../outputs/display_gd.csv')
+# data processing
+# good_df['category'] = "good"
+# bad_df['category'] = "bad"
+# all_df = pd.concat([good_df,bad_df], ignore_index=True)
