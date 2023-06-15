@@ -10,9 +10,9 @@ This is the crux of our app. Guiding real estate developers and investors on the
     with tab1:
         st.header("The Team: GitHub Links")
         st.write("[willbanny](https://github.com/willbanny)")
-        st.write("[oppynate]https://github.com/oppynate")
+        st.write("[oppynate](https://github.com/oppynate)")
         st.write("[Mih-Sud](https://github.com/Mih-Sud)")
-        st.write("[Darius1295]https://github.com/Darius1295")
+        st.write("[Darius1295](https://github.com/Darius1295)")
 
     with tab2:
         st.header("Maths")
