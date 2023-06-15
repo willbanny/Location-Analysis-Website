@@ -5,7 +5,6 @@ import folium
 import os
 from folium.plugins import HeatMap
 from streamlit_folium import st_folium, folium_static
-# from gbq_functions.big_query_download import *
 from gbq_functions.params import *
 import matplotlib.pyplot as plt
 from google.cloud import bigquery
@@ -23,14 +22,7 @@ st.markdown("<h1 style='text-align: center; color: black;'>LocA</h1>", unsafe_al
 
 st.markdown("<h2 style='text-align: center; color: black;'>London Borough Analysis </h2>", unsafe_allow_html=True)
 
-
-# '''
-# # Location Analysis
-# ## Analysing the 33 London Boroughs
-# '''
-
-
-
+# setting default input list of all boroughs
 input_list = ['Barking and Dagenham London Boro',
  'Barnet London Boro',
  'Bexley London Boro',
@@ -64,10 +56,6 @@ input_list = ['Barking and Dagenham London Boro',
  'Tower Hamlets London Boro',
  'Waltham Forest London Boro',
  'Wandsworth London Boro']
-# create multiselect options
-# multi_option = st.multiselect("select/deselect London boroughs",
-#                         input_list,default=['City and County of the City of London'],
-#                         on_change=st.session_state['district'] = input_list])
 
 if 'district' not in st.session_state:
     st.session_state['district'] = input_list
@@ -75,6 +63,7 @@ if 'district' not in st.session_state:
 if len(st.session_state['district']) == 0:
     st.session_state['district'] = input_list
 
+#creating multi select side bar tool
 selected_options = st.sidebar.multiselect("select/deselect boroughs - then click submit",
 input_list)
 
@@ -90,7 +79,7 @@ else:
         st.session_state['district'] = input_list
 
 
-
+# getting map data and cacheing it
 @st.cache_data(persist=True)
 def get_map_data(district):
     return load_london_gdf_data(district)
@@ -149,5 +138,3 @@ layout = go.Layout(
 
 fig = go.Figure(data=[scatter_trace, scatter_trace_bd, care_scat], layout=layout)
 st.plotly_chart(fig, use_container_width=True)
-
-# Bar Chart?

@@ -5,7 +5,6 @@ import folium
 import os
 from folium.plugins import HeatMap
 from streamlit_folium import st_folium, folium_static
-# from gbq_functions.big_query_download import *
 from gbq_functions.params import *
 import matplotlib.pyplot as plt
 from google.cloud import bigquery
@@ -26,19 +25,6 @@ credentials = service_account.Credentials.from_service_account_info(st.secrets["
 st.markdown("<h1 style='text-align: center; color: black;'>LocA</h1>", unsafe_allow_html=True)
 
 st.markdown("<h2 style='text-align: center; color: black;'>District Analysis </h2>", unsafe_allow_html=True)
-
-st.session_state
-
-
-# '''
-# # Location Analysis
-# ## Analyse by Specific Districts
-# '''
-
-
-# for key in st.session_state.keys():
-#         del st.session_state[key]
-# get list of the districts (for inputs)
 
 @st.cache_data(persist=True)
 def get_master_district_df():
@@ -69,9 +55,6 @@ master_df = master_df.sort_values(by="District", ascending=True) #sorts
 
 carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
 
-#load output dataset
-
-# all_df = load_output_df()
 
 # create drop down box
 option = st.selectbox("Select District:",
@@ -81,15 +64,7 @@ option = st.selectbox("Select District:",
 if 'district' not in st.session_state:
     st.session_state['district'] = 'Adur District'
 
-# #creating buttons
-# with st.form("district input"):
-#     district_input = option
-#     submitted = st.form_submit_button("Search District")
-#     if submitted:
-#         if 'district' not in st.session_state:
-#             st.session_state['district'] = 'Adur District'
-#         st.session_state['district'] = district_input
-
+# getting map data and caching it
 @st.cache_data(persist=True)
 def get_map_data(district):
     return load_gdf_data(district)
@@ -98,9 +73,6 @@ if st.button('Submit!'):
     st.session_state['district'] = option
 gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
 
-
-# if st.session_state['district']:
-#     gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
@@ -191,42 +163,3 @@ plt.grid(True)
 plt.tight_layout()
 plt.legend()
 st.pyplot(fig)
-
-
-
-# load output datasets
-# bad_df = pd.read_csv('../outputs/display_bad.csv')
-# good_df = pd.read_csv('../outputs/display_gd.csv')
-# data processing
-# good_df['category'] = "good"
-# bad_df['category'] = "bad"
-# all_df = pd.concat([good_df,bad_df], ignore_index=True)
-
-#deprecated heatmap code
-
-        # labeled_df_filtered = labeled_df[labeled_df['district_name']==st.session_state['district']]
-        # sorted_df_filtered = sorted_df[sorted_df['District']==st.session_state['district']]
-        # start_lat = sorted_df_filtered.iloc[0]['Centroid_Lat']
-        # start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
-        # centre_point = [start_lat, start_lon]
-        # st.session_state['centre'] = centre_point
-        # lats = labeled_df_filtered['lat']
-        # longs = labeled_df_filtered['lng']
-        # clusters = labeled_df_filtered['Labels']
-        # zipped = zip(lats, longs, clusters)
-        # data = np.array(list(zipped))
-        # # if 'data' not in st.session_state:
-        # #     st.session_state['data'] = data
-        # st.session_state['data'] = data
-
-# def plotDot(point):
-#     '''input: series that contains a numeric named latitude and a numeric named longitude
-#     this function creates a CircleMarker and adds it to your this_map'''
-#     folium.CircleMarker(location=[point.lat, point.lng],
-#                         radius=1,
-#                         weight=2).add_to(mapObj)
-# zoom = 12
-# if 'centre' not in st.session_state:
-#     st.session_state['centre'] = [51.509865,-0.118092]
-#     zoom = 6
-# mapObj = folium.Map(location=st.session_state['centre'], zoom_start=zoom)

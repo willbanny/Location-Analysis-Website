@@ -19,18 +19,11 @@ st.set_page_config(page_title="LocA", layout="wide", initial_sidebar_state="auto
 for key in st.session_state.keys():
         del st.session_state[key]
 
-'''
-# Location Analysis
-## District Specific
-'''
-# for key in st.session_state.keys():
-#         del st.session_state[key]
-# get list of the districts (for inputs)
+st.markdown("<h1 style='text-align: center; color: black;'>LocA</h1>", unsafe_allow_html=True)
+
+st.markdown("<h2 style='text-align: center; color: black;'>Alternative Mapping Technique </h2>", unsafe_allow_html=True)
 
 credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
-
-
-all_df = load_output_df()
 
 @st.cache_data(persist=True)
 def get_master_district_df():
@@ -64,16 +57,6 @@ option = st.selectbox("Select District:",
 # set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
     st.session_state['district'] = 'Adur District'
-
-#creating buttons
-# with st.form("district input"):
-#     district_input = option
-#     submitted = st.form_submit_button("Search District")
-#     if submitted:
-#         st.session_state['district'] = district_input
-
-# if st.button('Submit!'):
-#     st.session_state['district'] = option
 
 @st.cache_data
 def create_map(district):
@@ -136,124 +119,3 @@ def create_map(district):
 if st.button('Submit!'):
     st.session_state['district'] = option
 create_map(st.session_state['district'])
-
-
-# golden_df = all_df[all_df['district_name'] == st.session_state['district']]
-# golden_df = golden_df.drop_duplicates(['lat', 'lng'])
-# golden_df['id'] = golden_df.index
-# mapObj = folium.Map(location=[51.509865,-0.118092], zoom_start=10, prefer_canvas=True)
-
-# lats = np.array( golden_df['lat'] )
-# longs = np.array( golden_df['lng'] )
-
-# # set up the grid
-# lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
-# long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
-
-
-# my_geo_json = {
-#       "type": "FeatureCollection",
-#       "features": []}
-
-
-# for i in range(len(lats)):
-#     my_geo_json['features'].append(
-#         {
-#           "type": "Feature",
-#           "properties": {},
-#           "geometry": {
-#             "type": "Polygon",
-#             "coordinates": [[
-#                 [longs[i] - long_step/2, lats[i] - lat_step/2],
-#                 [longs[i] - long_step/2, lats[i] + lat_step/2],
-#                 [longs[i] + long_step/2, lats[i] + lat_step/2],
-#                 [longs[i] + long_step/2, lats[i] - lat_step/2],
-#                 [longs[i] - long_step/2, lats[i] - lat_step/2],
-#               ]]},
-#           "id": int(golden_df['id'].values[i])
-#         }
-#     )
-
-
-#     folium.Choropleth(
-#     geo_data=my_geo_json,
-#     data=golden_df,
-#     columns = ['id','metric'],
-#     fill_color='YlGn',
-#     fill_opacity=0.5,
-#     line_opacity=0,
-#     key_on='feature.id',
-#     bins=5
-# ).add_to(mapObj)
-
-# folium_static(mapObj, width = 725)
-
-
-
-
-
-
-
-
-
-
-# def plotDot(point):
-#     '''input: series that contains a numeric named latitude and a numeric named longitude
-#     this function creates a CircleMarker and adds it to your this_map'''
-#     folium.CircleMarker(location=[point.lat, point.lng],
-#                         radius=1,
-#                         weight=2).add_to(mapObj)
-
-
-# def geo_json(lat, long, cluster, lat_step, long_step):
-#     cmap = mpl.cm.viridis
-#     return {
-#       "type": "FeatureCollection",
-#       "features": [
-#         {
-#           "type": "Feature",
-#           "properties": {
-#             'color': 'white',
-#             'opacity': '0',
-#             'weight': 1,
-#             'fillColor': mpl.colors.to_hex(cmap(cluster*( 255//max(clusters) ) ) ),
-#             'fillOpacity': 0.5,
-#           },
-#           "geometry": {
-#             "type": "Polygon",
-#             "coordinates": [[
-#                 [long - long_step/2, lat - lat_step/2],
-#                 [long - long_step/2, lat + lat_step/2],
-#                 [long + long_step/2, lat + lat_step/2],
-#                 [long + long_step/2, lat - lat_step/2],
-#                 [long - long_step/2, lat - lat_step/2],
-#               ]]}}]}
-
-# # ...with squares...
-
-# if 'lat_step' not in st.session_state:
-#     st.session_state['lat_step'] = 0.002
-# if 'long_step' not in st.session_state:
-#     st.session_state['long_step'] = 0.002
-# def apply_squares():
-#     for i in np.arange(len(clusters)):
-#         folium.GeoJson(geo_json(lats[i], longs[i], clusters[i], st.session_state['lat_step'], st.session_state['long_step'] ),
-#                     lambda x: x['properties']).add_to(mapObj)
-# apply_squares()
-
-# zoom = 12
-# if 'centre' not in st.session_state:
-#     st.session_state['centre'] = [51.509865,-0.118092]
-#     zoom = 6
-# mapObj = folium.Map(location=st.session_state['centre'], zoom_start=zoom)
-
-# with st.form("carehome input"):
-#     carehome_submit = st.form_submit_button("Add Carehomes?")
-#     if carehome_submit:
-#         carehomes_df[carehomes_df['district_name'] == st.session_state['district']].apply(plotDot, axis = 1)
-
-
-
-# if 'data' in st.session_state:
-#     HeatMap(st.session_state['data'], scale_radius=True, radius=30).add_to(mapObj)
-# folium_static(mapObj, width = 725)
