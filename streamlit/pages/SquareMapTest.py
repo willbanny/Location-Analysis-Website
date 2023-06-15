@@ -134,7 +134,7 @@ def create_map(district):
 
 if st.button('Submit!'):
     st.session_state['district'] = option
-    create_map(st.session_state['district'])
+create_map(st.session_state['district'])
 
 
 # golden_df = all_df[all_df['district_name'] == st.session_state['district']]
