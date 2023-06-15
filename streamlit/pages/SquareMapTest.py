@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import folium
+import os
 from folium.plugins import HeatMap
 from streamlit_folium import st_folium, folium_static
 # from gbq_functions.big_query_download import *
