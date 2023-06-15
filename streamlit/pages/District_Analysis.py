@@ -82,7 +82,7 @@ with st.form("district input"):
     submitted = st.form_submit_button("Search District")
     if submitted:
         if 'district' not in st.session_state:
-            st.session_state['district'] = 'district_input'
+            st.session_state['district'] = 'Adur District'
         st.session_state['district'] = district_input
 
 # @st.cache_data(persist=True)
