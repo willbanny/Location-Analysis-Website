@@ -15,7 +15,8 @@ from google.oauth2 import service_account
 import plotly.express as px
 import plotly.graph_objects as go
 
-# st.cache_data.clear()
+for key in st.session_state.keys():
+        del st.session_state[key]
 
 credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
 
@@ -24,6 +25,8 @@ credentials = service_account.Credentials.from_service_account_info(st.secrets["
 # Location Analysis
 ## Analyse by Specific Districts
 '''
+
+
 # for key in st.session_state.keys():
 #         del st.session_state[key]
 # get list of the districts (for inputs)
@@ -85,7 +88,7 @@ with st.form("district input"):
             st.session_state['district'] = 'Adur District'
         st.session_state['district'] = district_input
 
-# @st.cache_data(persist=True)
+@st.cache_data(persist=True)
 def get_map_data(district):
     return load_gdf_data(district)
 

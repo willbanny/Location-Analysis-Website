@@ -14,6 +14,8 @@ from functions_for_website.radar import *
 import plotly.express as px
 import plotly.graph_objects as go
 
+for key in st.session_state.keys():
+        del st.session_state[key]
 
 '''
 # Location Analysis
