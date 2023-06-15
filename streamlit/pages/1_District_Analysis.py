@@ -72,9 +72,9 @@ if 'district' not in st.session_state:
 st.session_state
 
 # getting map data and caching it
-@st.cache_data(persist=True)
-def get_map_data(district):
-    return load_gdf_data(district)
+# @st.cache_data(persist=True)
+# def get_map_data(district):
+#     return load_gdf_data(district)
 
 if st.button('Submit!'):
     st.session_state['district'] = option
