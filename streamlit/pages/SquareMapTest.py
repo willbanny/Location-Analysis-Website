@@ -107,7 +107,7 @@ def create_map(district):
         df = pd.read_csv(csv)
         return df
 
-    df = load_data('../outputs/display_gd.csv')
+    df = load_data(os.path.abspath("outputs/display_bad.csv"))
     golden_df = df[df['district_name'] == district]
     golden_df = golden_df.drop_duplicates(['lat', 'lng'])
     golden_df['id'] = golden_df.index
