@@ -83,7 +83,7 @@ def create_map(district):
 
     df_good = load_data(os.path.abspath("outputs/display_gd.csv"))
     df_bad = load_data(os.path.abspath("outputs/display_bad.csv"))
-    df = pd.concat(df_good, df_bad,ignore_index=True)
+    df = pd.concat([df_good, df_bad],ignore_index=True)
     golden_df = df[df['district_name'] == district]
     golden_df = golden_df.drop_duplicates(['lat', 'lng'])
     golden_df['id'] = golden_df.index
@@ -132,7 +132,7 @@ def create_map(district):
 
     folium_static(mapObj, width = 725)
 
-if st.session_state['district']:
+if st.button('Submit!'):
     create_map(st.session_state['district'])
 
 
