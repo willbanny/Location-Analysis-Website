@@ -113,7 +113,7 @@ def create_map(district):
     golden_df = golden_df.drop_duplicates(['lat', 'lng'])
     golden_df['id'] = golden_df.index
 
-    mapObj = folium.Map(location=[51.509865,-0.118092], zoom_start=10, prefer_canvas=True)
+    mapObj = folium.Map(location=[golden_df['lat'].mean(),golden_df['lng'].mean()], zoom_start=10, prefer_canvas=True)
 
     lats = np.array( golden_df['lat'] )
     longs = np.array( golden_df['lng'] )
@@ -148,7 +148,7 @@ def create_map(district):
         geo_data=my_geo_json,
         data=golden_df,
         columns = ['id','metric'],
-        fill_color='YlGn',
+        fill_color='RdYlGn',
         fill_opacity=0.6,
         line_opacity=0,
         key_on='feature.id',
@@ -158,7 +158,7 @@ def create_map(district):
     folium_static(mapObj, width = 725)
 
 
-create_map('Cambridge District (B)')
+create_map(st.session_state['district'])
 
 
 # golden_df = all_df[all_df['district_name'] == st.session_state['district']]
