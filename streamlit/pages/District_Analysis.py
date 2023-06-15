@@ -20,11 +20,16 @@ for key in st.session_state.keys():
 
 credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
 
+st.markdown("<h1 style='text-align: center; color: black;'>LocA</h1>", unsafe_allow_html=True)
 
-'''
-# Location Analysis
-## Analyse by Specific Districts
-'''
+st.markdown("<h2 style='text-align: center; color: black;'>District Analysis </h2>", unsafe_allow_html=True)
+
+
+
+# '''
+# # Location Analysis
+# ## Analyse by Specific Districts
+# '''
 
 
 # for key in st.session_state.keys():

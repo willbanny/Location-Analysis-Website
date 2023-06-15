@@ -17,10 +17,15 @@ import plotly.graph_objects as go
 for key in st.session_state.keys():
         del st.session_state[key]
 
-'''
-# Location Analysis
-## Analysing the 33 London Boroughs
-'''
+st.markdown("<h1 style='text-align: center; color: black;'>LocA</h1>", unsafe_allow_html=True)
+
+st.markdown("<h2 style='text-align: center; color: black;'>London Borough Analysis </h2>", unsafe_allow_html=True)
+
+
+# '''
+# # Location Analysis
+# ## Analysing the 33 London Boroughs
+# '''
 
 
 

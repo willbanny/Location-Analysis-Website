@@ -50,13 +50,13 @@ def get_master_district_df():
     return master_districts_df
 master_df = get_master_district_df()
 master_df['start'] = master_df['District_ID'].astype(str).str[0] #gets the letter at start of dist.
-master_df_filtered = master_df[master_df['start'] == "E"] #filters for english districts only
-sorted_df = master_df_filtered.sort_values(by="District_ID", ascending=False) #sorts
+master_df = master_df[master_df['start'] == "E"] #filters for english districts only
+master_df = master_df.sort_values(by="District_ID", ascending=False) #sorts
 
 
 # create drop down box
 option = st.selectbox("Select District:",
-                      list(sorted_df['District']))
+                      list(master_df['District']))
 
 # set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
