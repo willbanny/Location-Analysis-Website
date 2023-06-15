@@ -96,9 +96,9 @@ scatter_trace = go.Scattermapbox(
         size=5,
         sizeref=1,
         color=gdf['metric'],
-        colorscale='greens',
+        colorscale='algae',
         opacity=0.6,
-        colorbar=dict(title='Metric', x=0.8, len=0.4)
+        colorbar=dict(title='Good', x=0.9, len=0.4)
     ),
     hovertext=gdf['metric'],
 )
@@ -111,9 +111,9 @@ scatter_trace_bd = go.Scattermapbox(
         size=5,
         sizeref=1,
         color=gdf2['metric'],
-        colorscale='reds',
+        colorscale='reds_r',
         opacity=0.6,
-        colorbar=dict(title='Metric', x=1.0, len=0.4)
+        colorbar=dict(title='Bad', x=1.0, len=0.4)
     ),
     hovertext=gdf2['metric'],
 )
