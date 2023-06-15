@@ -131,7 +131,6 @@ def create_map(district):
 
 if st.session_state['district']:
     create_map(st.session_state['district'])
-create_map("Adur District")
 
 
 # golden_df = all_df[all_df['district_name'] == st.session_state['district']]
