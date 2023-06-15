@@ -16,11 +16,8 @@ import plotly.graph_objects as go
 
 st.set_page_config(page_title="LocA", layout="wide", initial_sidebar_state="auto", menu_items=None)
 
-
 for key in st.session_state.keys():
         del st.session_state[key]
-
-st.session_state
 
 credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
 
@@ -57,19 +54,15 @@ master_df = master_df.sort_values(by="District", ascending=True) #sorts
 
 carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
 
-st.session_state
 
 # create drop down box
 option = st.selectbox("Select District:",
                       list(master_df['District']))
 
-st.write(option)
-
 # set up the website to show first option (Adur District) on initializing
 if 'district' not in st.session_state:
     st.session_state['district'] = 'Adur District'
 
-st.session_state
 
 # getting map data and caching it
 # @st.cache_data(persist=True)
@@ -80,8 +73,6 @@ if st.button('Submit!'):
     st.session_state['district'] = option
 gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
 
-
-st.session_state
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
@@ -126,16 +117,12 @@ care_scat = go.Scattermapbox(
     hovertext='Care Homes',
 )
 
-st.write(care_scat)
-
 layout = go.Layout(
     mapbox_style='carto-positron',
     mapbox_zoom=8,
     mapbox_center={'lat': gdf['lat'].mean(), 'lon': gdf['lng'].mean()},
     margin={'r': 0, 't': 0, 'l': 0, 'b': 0},
 )
-
-st.session_state
 
 fig = go.Figure(data=[scatter_trace, scatter_trace_bd, care_scat], layout=layout)
 st.plotly_chart(fig, use_container_width=True)
