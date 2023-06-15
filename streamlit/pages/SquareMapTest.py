@@ -51,8 +51,9 @@ def get_master_district_df():
     return master_districts_df
 master_df = get_master_district_df()
 master_df['start'] = master_df['District_ID'].astype(str).str[0] #gets the letter at start of dist.
-master_df = master_df[master_df['start'] == "E"] #filters for english districts only
-master_df = master_df.sort_values(by="District_ID", ascending=False) #sorts
+master_df = master_df[master_df['start'] == "E"]
+master_df = master_df[~master_df['District'].str.contains("London",regex=False)]
+master_df = master_df.sort_values(by="District", ascending=True) #sorts
 
 
 # create drop down box
@@ -71,35 +72,6 @@ with st.form("district input"):
         if 'district' not in st.session_state:
             st.session_state['district'] = 'Adur District'
         st.session_state['district'] = district_input
-
-# #creating buttons
-# with st.form("district input"):
-#     district_input = option
-#     submitted = st.form_submit_button("Search District")
-#     if submitted:
-#         # if 'district' not in st.session_state:
-#         #     st.session_state['district'] = district_input
-#         st.session_state['district'] = district_input
-#         labeled_df_filtered = labeled_df[labeled_df['district_name']==st.session_state['district']]
-#         sorted_df_filtered = sorted_df[sorted_df['District']==st.session_state['district']]
-#         start_lat = sorted_df_filtered.iloc[0]['Centroid_Lat']
-#         start_lon = sorted_df_filtered.iloc[0]['Centroid_Lon']
-#         centre_point = [start_lat, start_lon]
-#         st.session_state['centre'] = centre_point
-#         lats = np.array(labeled_df_filtered['lat'])
-#         longs = np.array(labeled_df_filtered['lng'])
-#         lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
-#         st.session_state['lat_step'] = lat_step
-
-#         long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
-#         st.session_state['long_step'] = long_step
-
-#         clusters = np.array(labeled_df_filtered['Labels'])
-#         zipped = zip(lats, longs, clusters)
-#         data = np.array(list(zipped))
-#         # if 'data' not in st.session_state:
-#         #     st.session_state['data'] = data
-#         st.session_state['data'] = data
 
 @st.cache_data
 def create_map(district):
@@ -157,8 +129,9 @@ def create_map(district):
 
     folium_static(mapObj, width = 725)
 
-
-create_map(st.session_state['district'])
+if st.session_state['district']:
+    create_map(st.session_state['district'])
+create_map("Adur District")
 
 
 # golden_df = all_df[all_df['district_name'] == st.session_state['district']]
