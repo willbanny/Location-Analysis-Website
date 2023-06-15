@@ -63,6 +63,8 @@ st.session_state
 option = st.selectbox("Select District:",
                       list(master_df['District']))
 
+st.write(option)
+
 # set up the website to show first option (Adur District) on initializing
 if 'district' not in st.session_state:
     st.session_state['district'] = 'Adur District'
@@ -78,6 +80,9 @@ if st.button('Submit!'):
     st.session_state['district'] = option
 gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
 
+
+st.session_state
+st.dataframe(gdf)
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
