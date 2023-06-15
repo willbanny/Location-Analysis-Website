@@ -14,6 +14,9 @@ import streamlit.components.v1 as components
 from functions_for_website.load_outputs import *
 
 
+for key in st.session_state.keys():
+        del st.session_state[key]
+
 '''
 # Location Analysis
 ## District Specific
@@ -57,7 +60,7 @@ option = st.selectbox("Select District:",
 
 # set up the website to show Dorset on initializing
 if 'district' not in st.session_state:
-    st.session_state['district'] = 'Dorset'
+    st.session_state['district'] = 'Adur District'
 
 #creating buttons
 with st.form("district input"):
@@ -65,15 +68,8 @@ with st.form("district input"):
     submitted = st.form_submit_button("Search District")
     if submitted:
         if 'district' not in st.session_state:
-            st.session_state['district'] = 'district_input'
+            st.session_state['district'] = 'Adur District'
         st.session_state['district'] = district_input
-
-labeled_df = all_df.rename(columns = {"metric": "Labels"})
-lats = labeled_df['lat']
-longs = labeled_df['lng']
-clusters = labeled_df['Labels']
-
-
 
 # #creating buttons
 # with st.form("district input"):

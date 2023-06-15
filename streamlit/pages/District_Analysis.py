@@ -49,8 +49,10 @@ def get_master_district_df():
     result = query_job.result()
     master_districts_df = result.to_dataframe()
     return master_districts_df
+
 master_df = get_master_district_df()
-#get sorted list of distric names (london boros first)
+
+#get sorted list of distric names (excluding london boroughs)
 master_df['start'] = master_df['District_ID'].astype(str).str[0] #gets the letter at start of dist.
 master_df_filtered = master_df[master_df['start'] == "E"]
 master_df_filtered = master_df_filtered[~master_df_filtered['District'].str.contains("London",regex=False)]
@@ -61,12 +63,7 @@ carehomes_df = pd.read_csv(os.path.abspath("outputs/all_carehomes.csv"))
 
 #load output dataset
 
-all_df = load_output_df()
-
-labeled_df = all_df.rename(columns = {"metric": "Labels"})
-lats = labeled_df['lat']
-longs = labeled_df['lng']
-clusters = labeled_df['Labels']
+# all_df = load_output_df()
 
 # create drop down box
 option = st.selectbox("Select District:",
