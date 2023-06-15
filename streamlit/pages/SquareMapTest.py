@@ -71,8 +71,8 @@ if 'district' not in st.session_state:
 #     if submitted:
 #         st.session_state['district'] = district_input
 
-if st.button('Submit!'):
-    st.session_state['district'] = option
+# if st.button('Submit!'):
+#     st.session_state['district'] = option
 
 @st.cache_data
 def create_map(district):
@@ -133,6 +133,7 @@ def create_map(district):
     folium_static(mapObj, width = 725)
 
 if st.button('Submit!'):
+    st.session_state['district'] = option
     create_map(st.session_state['district'])
 
 
