@@ -153,6 +153,10 @@ st.plotly_chart(fig, use_container_width=True)
 
 # Radar Charts
 
+st.markdown("<h2 style='text-align: center; color: black;'>Feature Analysis </h2>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: grey;'>Larger Radar Area -> Higher Quantity </h3>", unsafe_allow_html=True)
+
+
 @st.cache_data(ttl=3660)
 def get_radar_data(district):
     return radar_chart_data(district)
