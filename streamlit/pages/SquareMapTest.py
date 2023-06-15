@@ -100,56 +100,115 @@ with st.form("district input"):
 #         #     st.session_state['data'] = data
 #         st.session_state['data'] = data
 
+@st.cache_data
+def create_map(district):
+    @st.cache_data  # :point_left: Add the caching decorator
+    def load_data(csv):
+        df = pd.read_csv(csv)
+        return df
 
-golden_df = all_df[all_df['district_name'] == st.session_state['district']]
-golden_df = golden_df.drop_duplicates(['lat', 'lng'])
-golden_df['id'] = golden_df.index
-mapObj = folium.Map(location=[51.509865,-0.118092], zoom_start=10, prefer_canvas=True)
+    df = load_data('../outputs/display_gd.csv')
+    golden_df = df[df['district_name'] == district]
+    golden_df = golden_df.drop_duplicates(['lat', 'lng'])
+    golden_df['id'] = golden_df.index
 
-lats = np.array( golden_df['lat'] )
-longs = np.array( golden_df['lng'] )
+    mapObj = folium.Map(location=[51.509865,-0.118092], zoom_start=10, prefer_canvas=True)
 
-# set up the grid
-lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
-long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
+    lats = np.array( golden_df['lat'] )
+    longs = np.array( golden_df['lng'] )
 
+    # set up the grid
+    lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
+    long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
 
-my_geo_json = {
+    my_geo_json = {
       "type": "FeatureCollection",
       "features": []}
 
-
-for i in range(len(lats)):
-    my_geo_json['features'].append(
-        {
-          "type": "Feature",
-          "properties": {},
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [[
-                [longs[i] - long_step/2, lats[i] - lat_step/2],
-                [longs[i] - long_step/2, lats[i] + lat_step/2],
-                [longs[i] + long_step/2, lats[i] + lat_step/2],
-                [longs[i] + long_step/2, lats[i] - lat_step/2],
-                [longs[i] - long_step/2, lats[i] - lat_step/2],
-              ]]},
-          "id": int(golden_df['id'].values[i])
-        }
-    )
-
+    for i in range(len(lats)):
+        my_geo_json['features'].append(
+            {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [longs[i] - long_step/2, lats[i] - lat_step/2],
+                    [longs[i] - long_step/2, lats[i] + lat_step/2],
+                    [longs[i] + long_step/2, lats[i] + lat_step/2],
+                    [longs[i] + long_step/2, lats[i] - lat_step/2],
+                    [longs[i] - long_step/2, lats[i] - lat_step/2],
+                ]]},
+            "id": int(golden_df['id'].values[i])
+            }
+        )
 
     folium.Choropleth(
-    geo_data=my_geo_json,
-    data=golden_df,
-    columns = ['id','metric'],
-    fill_color='YlGn',
-    fill_opacity=0.5,
-    line_opacity=0,
-    key_on='feature.id',
-    bins=5
-).add_to(mapObj)
+        geo_data=my_geo_json,
+        data=golden_df,
+        columns = ['id','metric'],
+        fill_color='YlGn',
+        fill_opacity=0.6,
+        line_opacity=0,
+        key_on='feature.id',
+        bins=5
+    ).add_to(mapObj)
 
-folium_static(mapObj, width = 725)
+    folium_static(mapObj, width = 725)
+
+
+create_map('Cambridge District (B)')
+
+
+# golden_df = all_df[all_df['district_name'] == st.session_state['district']]
+# golden_df = golden_df.drop_duplicates(['lat', 'lng'])
+# golden_df['id'] = golden_df.index
+# mapObj = folium.Map(location=[51.509865,-0.118092], zoom_start=10, prefer_canvas=True)
+
+# lats = np.array( golden_df['lat'] )
+# longs = np.array( golden_df['lng'] )
+
+# # set up the grid
+# lat_step = max(n2 - n1 for n1, n2 in zip(sorted(set(lats)), sorted(set(lats))[1:]))
+# long_step = max(n2 - n1 for n1, n2 in zip(sorted(set(longs)), sorted(set(longs))[1:]))
+
+
+# my_geo_json = {
+#       "type": "FeatureCollection",
+#       "features": []}
+
+
+# for i in range(len(lats)):
+#     my_geo_json['features'].append(
+#         {
+#           "type": "Feature",
+#           "properties": {},
+#           "geometry": {
+#             "type": "Polygon",
+#             "coordinates": [[
+#                 [longs[i] - long_step/2, lats[i] - lat_step/2],
+#                 [longs[i] - long_step/2, lats[i] + lat_step/2],
+#                 [longs[i] + long_step/2, lats[i] + lat_step/2],
+#                 [longs[i] + long_step/2, lats[i] - lat_step/2],
+#                 [longs[i] - long_step/2, lats[i] - lat_step/2],
+#               ]]},
+#           "id": int(golden_df['id'].values[i])
+#         }
+#     )
+
+
+#     folium.Choropleth(
+#     geo_data=my_geo_json,
+#     data=golden_df,
+#     columns = ['id','metric'],
+#     fill_color='YlGn',
+#     fill_opacity=0.5,
+#     line_opacity=0,
+#     key_on='feature.id',
+#     bins=5
+# ).add_to(mapObj)
+
+# folium_static(mapObj, width = 725)
 
 
 
