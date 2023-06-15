@@ -20,7 +20,7 @@ This is the crux of our app. Guiding real estate developers and investors on the
         st.balloons()
     with tab3:
         st.header("Model")
-        st.write("K-Means classifier with 100 clusters and standard params. It is trained on all the 250m spaced grid points across England.")
+        st.write("K-Means classifier with 100 clusters and standard params. One model is trained on all the 250m spaced grid points across England. A second model is trained on just the London Boroughs for London-specific predictions.")
         st.write("We then predict the group of each care home by supplying the coordinates of actual care homes to the trained clustering model.")
 if __name__ == "__main__":
     about()
