@@ -1,5 +1,5 @@
 raw_data/
-.streamlit/
+.streamlit/secrets.toml
 .ipynb
 .html
 

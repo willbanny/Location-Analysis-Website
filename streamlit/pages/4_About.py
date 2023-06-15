@@ -8,11 +8,11 @@ def about():
 This is the crux of our app. Guiding real estate developers and investors on the best locations to build or buy.""")
     tab1, tab2, tab3= st.tabs(["Team", "Maths", "Model"])
     with tab1:
-        st.header("Team - GitHub usernames")
-        st.write("willbanny - [link](https://github.com/willbanny)")
-        st.write("oppynate")
-        st.write("Mih-Sud")
-        st.write("Darius1295")
+        st.header("The Team: GitHub Links")
+        st.write("[willbanny](https://github.com/willbanny)")
+        st.write("[oppynate]https://github.com/oppynate")
+        st.write("[Mih-Sud](https://github.com/Mih-Sud)")
+        st.write("[Darius1295]https://github.com/Darius1295")
 
     with tab2:
         st.header("Maths")
