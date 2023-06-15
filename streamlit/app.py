@@ -13,13 +13,14 @@ from functions_for_website.load_outputs import *
 st.set_page_config(page_title="LocA", layout="wide", initial_sidebar_state="auto", menu_items=None)
 
 '''
-# Location Analysis
-## Home Page
+# LocA
+## Table of Contents:
 '''
+st.write("[Page 1 - District Analysis](https://loca-intelligence.streamlit.app/District_Analysis)")
+st.write("[Page 2 - London Analysis](https://loca-intelligence.streamlit.app/London_Analysis)")
+st.write("[Page 3 - District Chloropleth](https://loca-intelligence.streamlit.app/District_Chloropleth)")
+st.write("[Page 4 - About Us](https://loca-intelligence.streamlit.app/About)")
 
-UK_mapObj = folium.Map(location = [52.56205522008627, -1.4647329224702776], zoom_start = 6)
-
-folium_static(UK_mapObj, width = 725)
 
 #bulk comment out below - don't think need any of it? just need/want HTML of full map plus the chart for clusters?
 
