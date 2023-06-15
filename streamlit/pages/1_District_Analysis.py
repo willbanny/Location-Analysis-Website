@@ -129,7 +129,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 # Radar Charts
 
-st.markdown("<h2 style='text-align: center; color: black;'>Feature Analysis </h2>", unsafe_allow_html=True)
+st.markdown(f"<h2 style='text-align: center; color: black;'>Feature Analysis: {st.session_state['district']}</h2>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center; color: grey;'> Point closer to edge = higher prevalence of feature in the area </h4>", unsafe_allow_html=True)
 
 
