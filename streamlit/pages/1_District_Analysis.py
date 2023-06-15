@@ -82,7 +82,6 @@ gdf, gdf2, gdf3 = load_gdf_data(st.session_state['district'])
 
 
 st.session_state
-st.dataframe(gdf)
 
 scatter_trace = go.Scattermapbox(
     lat=gdf['lat'],
