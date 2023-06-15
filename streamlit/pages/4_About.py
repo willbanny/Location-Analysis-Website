@@ -5,7 +5,7 @@ st.set_page_config(page_title="LocA", layout="wide", initial_sidebar_state="auto
 def about():
     st.title("About")
     st.write("""LocA (Location Analysis) is an app designed to find the best locations for Care Homes across England. We took a shapefile containing the boundaries of the ~300 districts in England, and partitioned them into latitude and longitude coordinates 250m apart, used some clever maths to figure out their nearest features and then some clever machine learning to cluster those districts together. Then we used some more clever maths to figure out which districts have the most care homes and where similar locations without care homes are.
-This is the crux of our app. Showing real estate developers and investors the best places to build or buy in order exploit the most vulnerable segment of the population. At least the location will be great.""")
+This is the crux of our app. Guiding real estate developers and investors on the best locations to build or buy.""")
     tab1, tab2, tab3= st.tabs(["Team", "Maths", "Model"])
     with tab1:
         st.header("Team - GitHub usernames")

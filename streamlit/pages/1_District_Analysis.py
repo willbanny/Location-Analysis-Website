@@ -17,7 +17,6 @@ import plotly.graph_objects as go
 
 st.set_page_config(page_title="LocA", layout="wide", initial_sidebar_state="auto", menu_items=None)
 
-st.session_state
 
 for key in st.session_state.keys():
         del st.session_state[key]
@@ -28,6 +27,7 @@ st.markdown("<h1 style='text-align: center; color: black;'>LocA</h1>", unsafe_al
 
 st.markdown("<h2 style='text-align: center; color: black;'>District Analysis </h2>", unsafe_allow_html=True)
 
+st.session_state
 
 
 # '''
