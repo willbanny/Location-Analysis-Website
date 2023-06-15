@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from google.cloud import bigquery
 from functions_for_website.load_outputs import *
 
-st.set_page_config(page_title="LocA: Tagline", layout="wide", initial_sidebar_state="auto", menu_items=None)
+st.set_page_config(page_title="LocA", layout="wide", initial_sidebar_state="auto", menu_items=None)
 
 '''
 # Location Analysis

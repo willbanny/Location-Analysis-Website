@@ -14,6 +14,7 @@ from google.oauth2 import service_account
 import streamlit.components.v1 as components
 from functions_for_website.load_outputs import *
 
+st.set_page_config(page_title="LocA", layout="wide", initial_sidebar_state="auto", menu_items=None)
 
 for key in st.session_state.keys():
         del st.session_state[key]
