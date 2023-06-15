@@ -65,11 +65,14 @@ if 'district' not in st.session_state:
     st.session_state['district'] = 'Adur District'
 
 #creating buttons
-with st.form("district input"):
-    district_input = option
-    submitted = st.form_submit_button("Search District")
-    if submitted:
-        st.session_state['district'] = district_input
+# with st.form("district input"):
+#     district_input = option
+#     submitted = st.form_submit_button("Search District")
+#     if submitted:
+#         st.session_state['district'] = district_input
+
+if st.button('Submit!'):
+    st.session_state['district'] = option
 
 @st.cache_data
 def create_map(district):
